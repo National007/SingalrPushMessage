@@ -1,0 +1,49 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <div id="dataTable">
+    </div>
+    <script src="~/Scripts/jquery-1.6.4.js"></script>
+    <script src="/Scripts/jquery.signalR-1.1.4.js"></script>
+    <script src="/Signalr/Hubs"></script>
+    <script>
+        $(function () {
+            //alert(1);
+            // Reference the hub.  
+            var hubNotif = $.connection.customerHub;
+            // Start the connection.  
+            $.connection.hub.start().done(function () {
+                getAll();
+            });
+            // Notify while anyChanges.  
+            hubNotif.client.updatedData = function () {
+                getAll();
+            };
+
+
+        });
+        function getAll() {
+            var model = $('#dataTable');
+            $.ajax(
+            {
+                url: 'GetAllData',
+                type: 'GET',
+            }).success(function (result) {
+                model.empty().append(result.Message);
+            }).error(function (e) {
+                alert(e);
+            });
+        }
+    </script>
+</body>
+</html>

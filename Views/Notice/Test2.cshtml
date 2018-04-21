@@ -1,0 +1,18 @@
+﻿@{
+    ViewBag.Title = "消息接收端2";
+}
+<script src="~/Scripts/jquery.signalR-1.1.4.js"></script>
+<script src="~/Signalr/Hubs"></script>
+<div id="Message">
+
+</div>
+<script>
+    // 引用自动生成的集线器代理
+    var pushHub = $.connection.pushHub;
+
+    // 定义服务器端调用的客户端notice来显示新消息
+    pushHub.client.notice = function (message) {
+        $("#Message").html(message);
+    }
+    $.connection.hub.start();   // 开始连接服务器
+</script>
