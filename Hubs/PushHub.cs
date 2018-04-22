@@ -16,5 +16,11 @@ namespace Ahoo.Demo.RuntimePush.Hubs
             // 调用所有客户端的notice方法
             context.Clients.All.notice(msg);
         }
+
+        public static void Play(string msg)
+        {
+            IHubContext context = GlobalHost.ConnectionManager.GetHubContext<PushHub>();
+            context.Clients.All.push(msg);
+        }
     }
 }

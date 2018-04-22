@@ -37,5 +37,22 @@ namespace Ahoo.Demo.RuntimePush.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
+        public JsonResult Add()
+        {
+            AjaxResult result = new AjaxResult();
+            try
+            {
+                PushHub.Play("您有新的订单，清及时处理");
+                result.Message = "广播成功!";
+            }
+            catch (Exception e)
+            {
+                result.IsSuccess = false;
+                result.Message = "广播失败!";
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }
